@@ -39,3 +39,8 @@ jspm_packages
 .vscode/
 
 .DS_Store
+
+gulpfile.js
+
+package.json
+
