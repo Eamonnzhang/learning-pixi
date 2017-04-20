@@ -15,11 +15,11 @@
 5. [把图片加载到纹理缓存里](#loading)
 6. [展示精灵](#displaying)
    1. [通过别名](#usingaliases)
-   2. [更过关于加载的小技巧](#alittlemoreaboutloadingthings)
+   2. [进一步了解『加载』](#alittlemoreaboutloadingthings)
       1. [从普通JavaScript图像对象或画布中创建一个精灵](#makeaspritefromanordinaryjavascriptimageobject)
       2. [为已加载的文件指定一个名字](#assigninganametoaloadingfile)
     3. [监控加载进度](#monitoringloadprogress)
-    4. [更多关于Pixi加载器](#moreaboutpixisloader)
+    4. [进一步了解『Pixi的加载器』](#moreaboutpixisloader)
 7. [定位精灵](#positioning)
 8. [尺寸和缩放](#sizenscale)
 9. [旋转](#rotation)
@@ -57,8 +57,8 @@
     4. [移动怪物](#movingmonsters)
     5. [碰撞检查](#checkingcollisions)
     6. [到达出口并结束游戏](#reachingexit)
-23. [更多关于精灵](#spriteproperties)
-24. [更进一步](#takingitfurther)</br>
+23. [进一步了解『精灵』](#spriteproperties)
+24. [更进一步学习](#takingitfurther)</br>
     1. [Hexi](#hexi)</br>
 25. [支持该项目](#supportingthisproject)
 
@@ -225,7 +225,7 @@ var stage = new PIXI.Container();
 renderer.render(stage);
 ```
 
-这是你开始使用Pixi的你需要写的最基本的代码。它会生成一个黑色的256*256大小的Canvas节点并且把它添加到你的HTML文档中。当你运行这段代码的时候，会有如下效果：
+这是你开始使用Pixi之前所需要写的最基本的代码。它会生成一个黑色的256*256大小的Canvas节点并且把它添加到你的HTML文档中。当你运行这段代码的时候，会有如下效果：
 
 ![基本展示](/examples/images/screenshots/01.png)
 
@@ -308,27 +308,27 @@ renderer.render(stage);
 ```
 不管你往这个 `stage` 里面放什么都会被渲染到canvas上面。现在这个 `stage` 是空的，但是一会儿我们就会往里面放一些东西。
 
-（注意：你可以给你的根容器任何你名字。如果你喜欢的话可以把它叫做 `scene` 或者 `root`。`stage` 这个名字仅仅是一个古老而有用的约定，我们也会在本教程中一直使用它。）
+（注意：你可以给你的根容器起任何你想起的名字。如果你喜欢的话可以把它叫做 `scene` 或者 `root`。`stage` 这个名字仅仅是一个约定俗成的名字，我们也会在本教程中一直使用它。）
 
-那么你想在舞台上放什么？特殊的图片对象被叫做 **精灵图**。你可以控制它们的位置，尺寸以及其他许多有用的可以制作交互式动画图形的属性。学习如何控制一个精灵图对学习如何使用Pixi来说是十分重要的。如果你知道了如何制作精灵图并把它们添加到舞台上，你才刚刚迈出了制作游戏的一小步、
+那么你想在舞台上放什么？特殊的图片对象被称为 **精灵图**。你可以控制它们的位置，尺寸以及其他许多有用的可以制作交互式动画图形的属性。学习如何控制一个精灵图对学习如何使用Pixi来说是十分重要的。如果你知道了如何制作精灵图并把它们添加到舞台上，你才刚刚迈出了制作游戏的一小步。
 
 Pixi有一个 `Sprite` 类，它是创建游戏精灵的通用方式。这里还有三个主要的方式去创建它们：
 
 - 使用单独一个图片文件
 - 使用**图片集** 的一个子图像。图片集是一个单独的，大的图像，它包含了所有游戏中你需要的图片。（译者注：就是我们说的雪碧图吧）。
-- 使用**纹理图集**（一个定义了在雪碧图中一个图片的位置和大小的JSON文件）
+- 使用**纹理图集**（一个定义了在雪碧图中每个子图的位置和大小的JSON文件）
 
-你将会学习所有的三种方式，但是，之前，让我们先弄清楚在你利用pixi展示图片之前你需要了解哪些关于图片的知识。
+你将会学习所有的三种方式，但是在此之前，让我们先弄清楚利用pixi展示图片之前，你需要了解哪些关于图片的知识。
 
 <a id='loading'></a>
 加载图像到纹理缓存中
 -------------------------------------
 
-因为Pixi通过WebGL把图像渲染到GPU上面，图像需要被格式化为GPU可以处理的方式。一个为WebGL准备的图像称为**纹理**。在你制作精灵展示图像之前，你需要把一个原始的图像转化为一个WebGL纹理。为了保持所有的东西都能在底层快速高效的工作，Pixi使用了一个 **纹理缓存** 去存储和引用所有精灵图所需要的纹理。纹理的名字是字符串，指向图片文件的位置。这意味着如果你有一个纹理是从`"images/cat.png"`载入的，那么你可以在纹理缓存中通过这种方式来找到它：
+因为Pixi通过WebGL在GPU上渲染图像，图像需要被格式化为GPU可以处理的格式。一个为WebGL准备的图像称为**纹理**。在你制作精灵展示图像之前，你需要把一个原始的图像转化为一个WebGL纹理。为了保持所有的东西都能在底层快速高效的工作，Pixi使用了一个 **纹理缓存** 去存储和引用所有精灵图所需要的纹理。纹理的名字是一个指向图片文件的位置的字符串。这意味着如果你有一个纹理是从`"images/cat.png"`载入的，那么你可以在纹理缓存中通过这种方式来找到它：
 ```js
 PIXI.utils.TextureCache["images/cat.png"];
 ```
-纹理都是已WebGL兼容格式存储的，这能让Pixi渲染器高效率的工作。然后你可以利用 `Sprite` 类通过用纹理来制作一个新的精灵。
+纹理都是以WebGL兼容格式存储的，这能让Pixi渲染器高效率的工作。然后你可以利用 `Sprite` 类通过纹理来制作一个新的精灵。
 ```js
 var texture = PIXI.utils.TextureCache["images/anySpriteImage.png"];
 var sprite = new PIXI.Sprite(texture);
@@ -374,7 +374,7 @@ PIXI.loader
   .add("images/imageThree.png")
   .load(setup);
 ```
-更好的做法是，把所有的你想加载文件放到一个数组里，通过一个`add`方法：
+更好的做法是，把所有的你想加载的文件放到一个数组里，只通过一个`add`方法：
 ```js
 PIXI.loader
   .add([
@@ -392,13 +392,13 @@ PIXI.loader
 
 在你加载了一个图片并用它制作了一个精灵之后，想要在canvas上看到它，还有两件事情你不得不做。
 
--1. 你需要通过 `stage.addChild` 方法把精灵添加到 Pixi的 `stage`中：
+- 1. 你需要通过 `stage.addChild` 方法把精灵添加到 Pixi的 `stage`中：
 ```js
 stage.addChild(cat);
 ```
 舞台是容纳所有精灵的主要容器。
 
--2. 你需要告诉Pixi的 `renderer` 去渲染这个舞台。
+- 2. 你需要告诉Pixi的 `renderer` 去渲染这个舞台。
 ```js
 renderer.render(stage);
 ```
@@ -455,7 +455,7 @@ anySprite.visible = false;
 ```js
 var TextureCache = PIXI.utils.TextureCache
 ```
-然后，用别名替换替换之前的位置：
+然后，用别名替换之前的位置：
 ```js
 var texture = TextureCache["images/cat.png"];
 ```
@@ -492,10 +492,10 @@ function setup() {
 ```
 本教程中的大部分例子都将遵从这个相同的范式来为Pixi设置别名。除非另有说明，你可以假设所有的例子代码都会像这样一样使用别名。
 
-这就是你需要加载图像和创建精灵的全部东西。
+这就是加载图像和创建精灵你所需要知道的全部知识。
 
 <a id='alittlemoreaboutloadingthings'></a>
-### 更过关于加载东西
+### 进一步了解『加载物品』
 
 刚才上面给你展示的格式是我建议的一个标准的模板用于加载图像和展示精灵。所以你可放心的忽略接下来的一小段章节，直接跳到下一章，『定位精灵』。但是Pixi的 `loader` 对象是相当复杂的，包括一些你需要关心的特性，尽管在基础的用法中你可能用不到。让我们看一些最有用的东西。
 
@@ -531,7 +531,7 @@ PIXI.loader
 ```js
 var cat = new PIXI.Sprite(PIXI.loader.resources.catImage.texture);
 ```
-然后，我个人不推荐你用这种特性！这是因为你需要不得不记住你给每一个加载文件的所有名字，同时也得确保你不会不经意间多次使用相同的名字。使用文件别名，正如我们以前例子里的一样，更简单和不容易出错。
+然而，我个人不推荐你用这种特性！这是因为你需要不得不记住你给每一个加载文件的所有名字，同时也得确保你不会不经意间多次使用相同的名字。使用文件别名，正如我们以前例子里的一样，更简单和不容易出错。
 
 <a id='monitoringloadprogress'></a>
 #### 监控加载进度
@@ -566,7 +566,7 @@ loading
 loading
 setup
 ```
-这很简洁，但还可以变得更好。你也可以明确的指明哪个文件已经加载了以及文件加载的百分比，可以通过给 `loadProgressHandler`添加`loader` 和 `resource` 参数：
+这很简洁，但还可以变得更好。你也可以明确的指明哪个文件已经加载了以及文件加载的百分比，可以通过给 `loadProgressHandler`添加       `loader` 和 `resource` 参数：
 ```js
 function loadProgressHandler(loader, resource) { //...
 ```
@@ -613,7 +613,7 @@ All files loaded
 （注意：你可以在 `resource` 对象里获取更多额外的属性。 `resource.error` 会告诉你在加载文件过程中任何可能发生的错误。 `resource.data` 能让你获取到文件的原始二进制数据。）
 
 <a id='moreaboutpixisloader'></a>
-#### 更多关于Pixi的加载器
+#### 进一步了解『Pixi的加载器』
 
 Pixi的加载器功能丰富而且可配置。在你开始使用之前，让我们快速一览一下它的用法吧。
 
@@ -624,11 +624,17 @@ add(name, url, optionObject, callbackFunction)
 这里是加载器的源代码文档关于这些参数的描述：
 
 `name` (string): 准备加载的资源的名字，如果不传递，则默认为 `url`。
+
 `url` (string): 资源的路径, 和加载器的 `baseUrl` 相对。
-`options` (object literal): 加载的配置。  
+
+`options` (object literal): 加载的配置。
+
 `options.crossOrigin` (Boolean): 请求是跨域的吗? 默认是自动确定。
+
 `options.loadType`: 这个资源是怎么被加载的? 默认值是 `Resource.LOAD_TYPE.XHR`。
+
 `options.xhrType`: 当用XHR加载的资源时如何被解释? 默认值为 `Resource.XHR_RESPONSE_TYPE.DEFAULT` 。
+
 `callbackFunction`: 当指定资源加载完成时调用此函数。
 
 唯一必须写的参数就是 `url`（你想要加载的文件）。
@@ -680,7 +686,7 @@ Pixi的加载器有很多先进的功能，包括让你能配置加载和解析�
 
 现在你知道如何创建和展示精灵图了，接下来让我们弄清楚如何定位和调节它们的尺寸吧。
 
-在前面的例子中，猫精灵图被添加在舞台的左上角。猫的 `x` 和 `y`位置都为0。你可以通过改变 `x` 和 `y` 的值来改变猫的位置。如何把猫居中的代码：
+在前面的例子中，猫精灵图被添加在舞台的左上角。猫的 `x` 和 `y` 位置都为0。你可以通过改变 `x` 和 `y` 的值来改变猫的位置。如何把猫居中的代码：
 ```js
 cat.x = 96;
 cat.y = 96;
@@ -721,7 +727,7 @@ sprite.position.set(x, y)
 尺寸和缩放
 --------------
 
-你可以通过设置 `width` 和 `height来改变精灵图的大小，下面代码标识如何给猫一个80像素宽和120像素高的大小：
+你可以通过设置 `width` 和 `height` 来改变精灵图的大小，下面代码展示了如何给猫一个80像素宽和120像素高的大小：
 ```js
 cat.width = 80;
 cat.height = 120;
@@ -753,12 +759,12 @@ function setup() {
 
 ![猫的宽和高改变 - 图表](/examples/images/screenshots/06.png)
 
-精灵图页有`scale.x`和`scale.y`属性可以成比例的改变精灵的宽和高。这里告诉你如何设置猫的大小未其原理的一半：
+精灵图页有`scale.x`和`scale.y`属性可以成比例的改变精灵的宽和高。这里告诉你如何设置猫的大小为其原来的一半：
 ```js
 cat.scale.x = 0.5;
 cat.scale.y = 0.5;
 ``` 
-缩放的值在0和1之间取值，代表精灵图尺寸的百分比。1 代表 100%（全部尺寸），0.5 代表 一半尺寸。你可以通过设置缩放的值为2成倍的设置精灵图的尺寸：
+缩放的值在0和1之间取值，代表精灵图尺寸的百分比。1 代表 100%（全部尺寸），0.5 代表 一半尺寸。你可以通过设置缩放的值为2，从而成倍的设置精灵图的尺寸：
 ```js
 cat.scale.x = 2;
 cat.scale.y = 2;
@@ -806,7 +812,7 @@ sprite.anchor.set(x, y)
 ```js
 cat.pivot.set(32, 32)
 ```
-设想一下精灵图为64*64大小，这个精灵现在将会围绕他的中心点旋转了。但是谨记：如果你改变精灵的中心点，你同时页改变了它的x/y原点。
+设想一下精灵图为64*64大小，这个精灵现在将会围绕他的中心点旋转了。但是谨记：如果你改变精灵的中心点，你同时也改变了它的x/y原点。
 
 所以， `anchor` 和 `pivot`的区别到底是什么？它们真的很相似！ `anchor`可以移动精灵图的纹理原点，通过设置0-1的值。
 `pivot`通过设置像素值来改变精灵的x和y的原点值。
@@ -831,7 +837,7 @@ loader
   .add("images/tileset.png")
   .load(setup);
 ```
-接下来，当图片加载完成，用一个雪碧图的矩形项去创造一个精灵图片。这里的代码就展示如何提取子图，创建火箭图像，并且定位并在canvas中展示它。
+接下来，当图片加载完成，用一个雪碧图的矩形项去创造一个精灵图片。这里的代码就展示如何提取子图，创建火箭图像，定位并且在canvas中展示它。
 ```js
 function setup() {
 
@@ -865,7 +871,7 @@ Pixi有一个内置的 `Rectangle` 对象（PIXI.Rectangle）是一个通用的�
 ```js
 var rectangle = new PIXI.Rectangle(x, y, width, height);
 ```
-矩形对象只是一个*数据对象*；你想怎么使用取决于你。在我们的例子中，我们使用它定义了在雪碧图的一个位置和区域去提取我们想要的子图。Pixi纹理有一个非常有用的属性叫： `frame` ，它能被设置为任何 `Rectangle` 对象。`frame` 通过 `Rectangle`所标尺寸来裁剪纹理。这里告诉你如何用 `frame`来裁剪火箭纹理的大小和位置。
+矩形对象只是一个*数据对象*；你想怎么使用取决于你。在我们的例子中，我们使用它定义了在雪碧图的一个位置和区域去提取我们想要的子图。Pixi纹理有一个非常有用的属性叫： `frame` ，它能被设置为任何 `Rectangle` 对象。`frame` 通过 `Rectangle`所标尺寸来裁剪纹理。这里告诉你如何用 `frame` 来裁剪火箭纹理的大小和位置。
 ```js
 var rectangle = new Rectangle(192, 128, 64, 64);
 texture.frame = rectangle;
@@ -876,21 +882,21 @@ var rocket = new Sprite(texture);
 ```
 这就是它工作的原理！
 
-因为从雪碧图创建精灵纹理是一个你将经常做的事情，Pixi有更多的渐变的方法去帮助你做这些 - 接下来让我们弄清楚这些方法
+因为从雪碧图创建精灵纹理是一个你将经常做的事情，Pixi有更多简便的方法去帮助你做这些 - 接下来让我们弄清楚这些方法。
 
 <a id='textureatlas'></a>
 使用纹理图集
 ---------------------
 
-如果你正在开发一个大型的、复杂的游戏，你需要一个快速高效的方式从雪碧图中制作精灵。所以**纹理图集**就变得非常有用了。一个纹理图集一个包含了雪碧图PNG文件所有子图的大小和位置的JSON文件。如果你用了纹理图集，展示子图你所需要全部知道的就是它的名字。你可以把你的雪碧图整理成任何次序，这个JSON文件会保持跟踪它们的位置和大小。这十分便捷，意味着雪碧图子图的大小和位置在你的游戏编程中将变得不再困难。如果你对雪碧图做了改变，比如添加图像，缩放它们，或者移动它们，只需要重新编译一个JSON文件，你的游戏会利用这些数据去展示正确的图像。你不需要把你游戏代码做任何改变。
+如果你正在开发一个大型的、复杂的游戏，你需要一个快速高效的方式从雪碧图中制作精灵。所以**纹理图集**就变得非常有用了。纹理图集是一个包含了雪碧图PNG文件所有子图大小和位置的JSON文件。如果你用了纹理图集，只需要知道子图的名字就能展示它。你可以把你的雪碧图整理成任何次序，这个JSON文件会保持跟踪它们的位置和大小。这十分便捷，意味着雪碧图子图的大小和位置在你的游戏编程中将变得不再困难。如果你对雪碧图做了改变，比如添加图像，缩放它们，或者移动它们，只需要重新编译一个JSON文件，你的游戏会利用这些数据去展示正确的图像。你不需要把你游戏代码做任何改变。
 
-Pixi是兼容从一个非常受欢迎的工具叫做[Texture Packer](https://www.codeandweb.com/texturepacker)输出的标准的JSON纹理图集格式。Texture Packer 的 “Essential” 许可证是免费的。让我们弄清楚如何用它来制作一个纹理图集，然后把图集加载到Pixi。（你不需要必须用Texture Packer。相似的工具还有 [Shoebox](http://renderhjs.net/shoebox/) 或者 [spritesheet.js](https://github.com/krzysztof-o/spritesheet.js/)，输出的PNG和标准格式的JSON文件都是和Pixi兼容的。）
+Pixi兼容从[Texture Packer](https://www.codeandweb.com/texturepacker)输出的标准的JSON纹理图集格式，Texture Packer很受欢迎。Texture Packer 的 “Essential” 许可证是免费的。让我们弄清楚如何用它来制作一个纹理图集，然后把图集加载到Pixi。（你不需要必须用Texture Packer。相似的工具还有 [Shoebox](http://renderhjs.net/shoebox/) 或者 [spritesheet.js](https://github.com/krzysztof-o/spritesheet.js/)，输出的PNG和标准格式的JSON文件都是和Pixi兼容的。）
 
 首先，从你需要在你游戏中使用的一系列单一图像开始。
 
 ![图片文件](/examples/images/screenshots/11.png)
 
-（在本章节的所有图片文件都是由 Lanea Zimmerman 创造的。你可以在[这儿](http://opengameart.org/users/sharm)找到更多关于它的作品，感谢Lanea！）
+（在本章节的所有图片文件都是由 Lanea Zimmerman 创造的。你可以在[这儿](http://opengameart.org/users/sharm)进一步了解它的作品，感谢Lanea！）
 
 接下来，打开 Texture Packer 并选择 **JSON Hash** 作为框架类型。 把你的图片都拖拽到 Texture Packer 的工作区。（你也可以让 Texture Packer 指向游戏包含的文件夹。）它会自动在雪碧图上整理些子图，然后设定它们的名字为它们原始图片的名字。
 
@@ -898,7 +904,7 @@ Pixi是兼容从一个非常受欢迎的工具叫做[Texture Packer](https://www
 
 （如果你正在使用免费版的Texture Packer，设置 **Algorithm** 为 `Basic`，设置 **Trim mode** 为 `None`，设置 **Size constraints** 为 `Any size` 然后滑动 **PNG Opt Level**到最左为 `0`。这是让你利用免费版的 Texture Packer 创建你的文件不会报错和警告的最基本的做法。 ）
 
-当你完成之后，点击 **Publish** 按钮。选择文件的名字的位置，然后保存发布文件。你将会得到两个文件：一个PNG文件和一个JSON文件。在这个例子中我的文件名字交`treasureHunter.json` 和 `treasureHunter.png`。方便起见，把他们都放在你项目的 `images` 文件夹中。（你可以认为JSON文件是图片文件的元数据，所以保持两个文件在同一个文件夹是有意义的。）这个JSON文件描述了每个子图的名字，尺寸和位置。这里是一个描述了怪物子图的摘要：
+当你完成之后，点击 **Publish** 按钮。选择文件的名字的位置，然后保存发布文件。你将会得到两个文件：一个PNG文件和一个JSON文件。在这个例子中我的文件名字叫 `treasureHunter.json` 和 `treasureHunter.png`。方便起见，把它们都放在你项目的 `images` 文件夹中。（你可以认为JSON文件是图片文件的元数据，所以保持两个文件在同一个文件夹是有意义的。）这个JSON文件描述了每个子图的名字，尺寸和位置。这里是一个描述了怪物子图的摘要：
 ```js
 "blob.png":
 {
@@ -912,7 +918,7 @@ Pixi是兼容从一个非常受欢迎的工具叫做[Texture Packer](https://www
 ```
  `treasureHunter.json` 文件也用同样的方式包含了 “dungeon.png”，“door.png”, "exit.png", 和 "explorer.png"。每一个子图被称为 **frames**。拥有这些数据是非常有帮助的，因为你不需要在知道雪碧图中每个子图的大小和位置了。所有你需要知道的就是精灵的 **frame id**。这个id就是元图片的名字，比如说 "blob.png" 或者 "explorer.png"。
 
-使用纹理图集的优点之一是你可以轻松的为每个子图添加2像素的内边距（Texture Packer 默认这么做）这是防止**纹理流血**的重要做法。纹理流血的现象会在当相邻图像的边缘在另一个精灵图旁边是出现，它出现的原因是你的电脑的GPU（图像处理单元）如何去四舍五入像素值。是该舍弃还是改进入？每个GPU都可能不一样。所以在图片的周围保留1或者2两个像素当使图片显示一直显示正常。
+使用纹理图集的优点之一是你可以轻松的为每个子图添加2像素的内边距（Texture Packer 默认这么做）这是防止**纹理流血**的重要做法。纹理流血的现象会在当相邻图像的边缘在另一个精灵图旁边是出现，它出现的原因是你的电脑的GPU（图像处理单元）如何去四舍五入像素值。是该舍弃还是该进入？每个GPU都可能不一样。所以在图片的周围保留1或者2两个像素可以使图片一直显示正常。
 
 （注意：如果你有在图片周围保留了两个像素的空白，在Pixi里展示的时候你需要注意一个奇怪的"一像素"差错，尝试改变纹理的尺度模式算法。这里是：`texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;`。这些差错会在GPU舍入浮点数误差时出现。）
 
@@ -922,13 +928,13 @@ Pixi是兼容从一个非常受欢迎的工具叫做[Texture Packer](https://www
 加载纹理图集
 -------------------------
 
-为了把纹理图集加入Pixi，用Pixi的 `loader` 加载它。如果你是用 Texture Packer 制作的JSON文件，`loader` 会自动在雪碧图上解释数据和创建纹理图。这里是如何用 `loader` 去加载 `treasureHunter.json`文件。当加载完成， `setup` 执行。
+为了把纹理图集加入Pixi，用Pixi的 `loader` 加载它。如果你是用 Texture Packer 制作的JSON文件，`loader` 会自动在雪碧图上解释数据和创建纹理图。这里是如何用 `loader` 去加载 `treasureHunter.json` 文件的代码，当加载完成，`setup` 执行：
 ```js
 loader
   .add("images/treasureHunter.json")
   .load(setup);
 ```
-现在每个雪碧图的每个文件在Pixi的缓存里都是一个单独的纹理了。你可以通过在 Texture Packer 设定的名字(“blob.png”, “dungeon.png”, “explorer.png”,等)来获取每一个纹理。
+现在雪碧图的每个子图在Pixi的缓存里都是一个单独的纹理了。你可以通过在 Texture Packer 设定的名字(“blob.png”, “dungeon.png”, “explorer.png”,等)来获取每一个纹理。
 
 <a id='creatingsprites'></a>
 从加载过的纹理图集创建精灵
@@ -1013,7 +1019,7 @@ explorer.y = stage.height / 2 - explorer.height / 2;
 
 ![All the texture atlas sprites](/examples/images/screenshots/14.png)
 
-这是做到上面效果的所有代码。我把HTML代码页添加进来了，所以你可以它的上下文中看到所有东西。
+这是做到上面效果的所有代码。我把HTML代码页添加进来了，所以你可以在它的上下文中看到所有东西。
 （你会在这个仓库的`examples/spriteFromTextureAtlas.html`文件看到这个作品）注意怪物精灵是被循环创建和添加到舞台中的，并被赋予了随机的位置。
 ```js
 <!doctype html>
@@ -1158,7 +1164,7 @@ function randomInt(min, max) {
 --------------
 
 现在你知道了如何展示精灵，但是让它们动起来呢？很简单：用 `requestAnimationFrame` 创建一个循环函数。这被称为 **游戏循环**。
-任何在游戏游戏循环的代码都会1s更新60次。你可以用这写代码让 `cat` 精灵用每帧1像素的速率移动。
+任何在游戏循环里的代码都会1s更新60次。你可以用下面的代码让 `cat` 精灵以每帧1像素的速率移动。
 ```js
 function gameLoop() {
 
@@ -1175,7 +1181,7 @@ function gameLoop() {
 //Start the game loop
 gameLoop();
 ```
-如果你运行了上面的代码，你会看到精灵逐步的移动到舞台的一边。
+如果你运行了上面的代码，你会看到精灵逐步地移动到舞台的一边。
 
 ![Moving sprites](/examples/images/screenshots/15.png)
 
@@ -2441,7 +2447,7 @@ function end() {
 这就是完成宝藏猎手所需要的一切了。然后在通过做更多一点的工作就能把这个简单的原型变成一个完整的游戏 - 快去试试吧！
 
 <a id='spriteproperties'></a>
-更多关于精灵
+进一步了解『精灵』
 -----------------------------
 
 目前为止你已经学会了如何用相当多有用的精灵的属性，像`x`, `y`, `visible`, 和 `rotation` ，它们让你能够让你很大程度上控制精灵的位置和外观。但是Pixi精灵也有其他很多有用的属性可以使用。[这是一个完整的列表](http://pixijs.download/release/docs/PIXI.Sprite.html)
