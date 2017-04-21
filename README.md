@@ -1320,7 +1320,7 @@ function play() {
   cat.x += 1;
 }
 ```
-你会看到 `gameLoop` 每秒60次调用了 `state` 函数。 `state` 函数是什么？它赋值给了 `play`。意味着 `play`函数会每秒运行60次。
+你会看到 `gameLoop` 每秒60次调用了 `state` 函数。 `state` 函数是什么？它被赋值为 `play`。意味着 `play`函数会每秒运行60次。
 
 下面的代码告诉你如果用这个新模式来重构上一个例子的代码：
 ```js
@@ -1362,7 +1362,7 @@ function play() {
   cat.x += cat.vx;
 }
 ```
-是的我知道这有点儿[head-swirler？](http://www.amazon.com/Electric-Psychedelic-Sitar-Headswirlers-1-5/dp/B004HZ14VS)！但是，不要害怕，花几分钟在脑海中过一遍这些函数是如何联系在一起的。正如你在将在前面看到的，结构化你的游戏循环代码，会使像切换游戏场景和关卡更简单。
+是的我知道这有点儿[head-swirler？](http://www.amazon.com/Electric-Psychedelic-Sitar-Headswirlers-1-5/dp/B004HZ14VS)！但是，不要害怕，花几分钟在脑海中过一遍这些函数是如何联系在一起的。正如你将在前面看到的，结构化你的游戏循环代码，会使像切换游戏场景和关卡变得更简单。
 
 <a id='keyboard'></a>
 键盘移动
@@ -1567,7 +1567,7 @@ renderer.render(stage);
 
 不过你现在可以像对待一个单一单元一样对待 `animals` 分组。你可以把 `Container` 当作是一个特殊类型的不包含任何纹理的精灵。
 
-如果你需要获取`animals` 包含的所有子精灵，你可以用它的 `children` 数组获取。
+如果你需要获取 `animals` 包含的所有子精灵，你可以用它的 `children` 数组获取。
 ```
 console.log(animals.children)
 //Displays: Array [Object, Object, Object]
@@ -1602,7 +1602,7 @@ animals.height = 200;
 
 ![Group width and height](/examples/images/screenshots/22.png)
 
-如果你喜欢，你可以在一个 `Container` 里嵌套许多其他`Container`，如果你需要可以创建一个更深的层次。然而，一个 `DisplayObject` （像 `Sprite` 或者其他 `Container`）只能一次属于一个父级。如果你用 `addChild` 让一个精灵成为其他精灵的孩子。Pixi会自动移除它当前的父级，这是一个你不用担心的有用的管理方式。
+如果你喜欢，你可以在一个 `Container` 里嵌套许多其他`Container`，如果你需要，完全可以创建一个更深的层次。然而，一个 `DisplayObject` （像 `Sprite` 或者其他 `Container`）只能一次属于一个父级。如果你用 `addChild` 让一个精灵成为其他精灵的孩子。Pixi会自动移除它当前的父级，这是一个你不用担心的有用的管理方式。
 
 <a id='localnglobal'></a>
 ### 局部和全局位置
@@ -1622,7 +1622,7 @@ console.log(cat.x);
 ```
 parentSprite.toGlobal(childSprite.position)
 ```
-这意味着你能在 `animals`分组里找到猫的全局位置：
+这意味着你能在 `animals` 分组里找到猫的全局位置：
 ```
 console.log(animals.toGlobal(cat.position));
 //Displays: Object {x: 80, y: 80...};
@@ -1635,7 +1635,7 @@ cat.parent.toGlobal(cat.position);
 ```
 即使你不知道猫的当前父级是谁，上面的代码依然能够正确工作。
 
-这还有一种方式能够计算出全局位置！而且，它实际上最好的方式，所以当心！如果你想知道精灵到canvas左上角的距离，但是不知道或者不关心精灵的父亲是谁，用 `getGlobalPosition` 方法。这里展示如何用它来找到老虎的全局位置：
+这还有一种方式能够计算出全局位置！而且，它实际上最好的方式，所以这里需要注意啦！如果你想知道精灵到canvas左上角的距离，但是不知道或者不关心精灵的父亲是谁，用 `getGlobalPosition` 方法。这里展示如何用它来找到老虎的全局位置：
 ```js
 tiger.getGlobalPosition().x
 tiger.getGlobalPosition().y
@@ -1665,9 +1665,9 @@ var superFastSprites = new ParticleContainer();
 ```
 然后用 `addChild` 去往里添加精灵，就像往普通的 `Container`添加一样。
 
-如果你决定用`ParticleContainer`你必须做出一些妥协。在 `ParticleContainer` 里的精灵图只有一小部分基本属性：`x`, `y`, `width`, `height`, `scale`, `pivot`, `alpha`, `visible` - 就这么多。而且，它包含的精灵不能在嵌套自己的孩子精灵。 `ParticleContainer` 也不能用Pixi的先进的视觉效果像过滤器和混合模式。每个 `ParticleContainer` 只能用一个纹理（所以你不得不一个雪碧图如果你想让精灵有不同的表现方式）。但是为了得到巨大的性能提升，这些妥协通常是值得的。你可以在同一个项目中同时用 `Container` 和 `ParticleContainer`，然后微调一下你自己的优化。
+如果你决定用`ParticleContainer`你必须做出一些妥协。在 `ParticleContainer` 里的精灵图只有一小部分基本属性：`x`, `y`, `width`, `height`, `scale`, `pivot`, `alpha`, `visible` - 就这么多。而且，它包含的精灵不能再继续嵌套自己的孩子精灵。 `ParticleContainer` 也不能用Pixi的先进的视觉效果像过滤器和混合模式。每个 `ParticleContainer` 只能用一个纹理（所以你不得不更换雪碧图如果你想让精灵有不同的表现方式）。但是为了得到巨大的性能提升，这些妥协通常是值得的。你可以在同一个项目中同时用 `Container` 和 `ParticleContainer`，然后微调一下你自己的优化。
 
-为什么在 `Particle Container` 的精灵图这么快呢？因为精灵的位置是直接在GPU上计算的。Pixi开发团队正在努力让尽可能多的雪碧图在GPU上处理，所以很有可能你用的最新版的Pixi的 `ParticleContainer` 的特性一定比我现在在这儿描述的特性多得多。查看当前[`ParticleContainer` 文档](http://pixijs.download/release/docs/PIXI.particles.ParticleContainer.html)以获取更多信息。
+为什么在 `Particle Container` 的精灵图这么快呢？因为精灵的位置是直接在GPU上计算的。Pixi开发团队正在努力让尽可能多的雪碧图在GPU上处理，所以很有可能你用的最新版的Pixi的 `ParticleContainer` 的特性一定比我现在在这儿描述的特性多得多。查看当前     [`ParticleContainer` 文档](http://pixijs.download/release/docs/PIXI.particles.ParticleContainer.html)以获取更多信息。
 
 当你创建一个 `ParticleContainer`，有两个参数可以传递，这个容器可以包裹的最大数量的精灵以及其他可配置对象。
 ```js
@@ -1687,7 +1687,7 @@ var superFastSprites = new ParticleContainer(
 ```
 但是，如果你感觉你不会用这些属性，就保持它们为 `false` 以挤出更大的性能。
 
- `uvs` 是什么鬼？只有你有当它们在动画的时候改变它们纹理的颗粒的时候需要设置为 `true` 。（想让它工作，所有的精灵纹理需要在同一张雪碧图上。）
+ `uvs` 是什么鬼？只有当它们在动画的时候需要改变它们纹理颗粒的时候你需要设置它为 `true` 。（想让它工作，所有的精灵纹理需要在同一张雪碧图上。）
 
 （注意：**UV mapping**是一个3D图表展示术语，它指纹理（图片）准备映射到三维表面的x和y的坐标。`U` 是 `x` 轴， `V` 是 `y` 轴。WebGL用 `x`, `y` 和 `z` 来进行三维空间定位，所以 `U` 和 `V` 被选为表示2D图片纹理的 `x` 和 `y` 。）
 
@@ -1695,7 +1695,7 @@ var superFastSprites = new ParticleContainer(
 Pixi的图元
 -------------------------
 
-用图片纹理是制作精灵最常用的方式，但是Pixi也有它自己的低层次的绘图工具。你可以用它们来制作矩形，形状，线条，复杂的多边形和文本。不但如此，幸运的是，它用了和[Canvas绘图API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_graphics_with_canvas)几乎一样的API。如果你已经对canvas非常熟悉了，这就没什么新的东西要学了。但是有一个巨大的优势是，不想Canvas的绘图API，用Pixi画的形状是通过WebGL在GPU上渲染的。Pixi让你能够达到所有未开发的性能。让我们来看看如何制作一些基本形状，这是我们要在代码里创建的所有形状：
+用图片纹理是制作精灵最常用的方式，但是Pixi也有它自己的底层绘图工具。你可以用它们来制作矩形，形状，线条，复杂的多边形和文本。不但如此，幸运的是，它用了和[Canvas绘图API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_graphics_with_canvas)几乎一样的API。如果你已经对canvas非常熟悉了，这就没什么新的东西要学了。但是有一个巨大的优势是，和Canvas的绘图API不同的是，用Pixi画的形状是通过WebGL在GPU上渲染的。Pixi让你能够达到所有未开发的性能。让我们来看看如何制作一些基本形状，这是我们要在代码里创建的所有形状：
 
 ![Graphic primitives](/examples/images/screenshots/23.png)
 
@@ -1735,7 +1735,6 @@ stage.addChild(rectangle);
 
 ```
 这段代码制作了一个64x64的，蓝色的，带红色边框的，x和y的位置是170的矩形。
-This code makes a 64 by 64 blue rectangle with a red border at an x and y position of 170.
 
 <a id='circles'></a>
 ### 圆形
@@ -1807,7 +1806,7 @@ stage.addChild(line);
 <a id='polygons'></a>
 ### 多边形
 
-你可以把线聚合在一起然后给它们填充不同的颜色从而用 `drawPolygon` 方法制作复杂的图形。`drawPolygon`的参数是一个xy点的数组，定义了图形上的每个点的位置：
+你可以把线条聚合在一起然后给它们填充不同的颜色从而用 `drawPolygon` 方法制作复杂的图形。`drawPolygon`的参数是一个xy点的数组，定义了图形上的每个点的位置：
 ```js
 var path = [
   point1X, point1Y,
@@ -1857,8 +1856,8 @@ stage.addChild(message);
 ```
 ![Displaying text](/examples/images/screenshots/24.png)
 
-Pixi的文字对象继承了 `Sprite` 类，所以它们包含了像`x`, `y`, `width`, `height`,
-`alpha`, 和 `rotation`相同的属性。在舞台上定位和缩放文字跟其他精灵是一样的。
+Pixi的文字对象继承了 `Sprite` 类，所以它们包含了像 `x`, `y`, `width`, `height`,
+`alpha` 和 `rotation`相同的属性。在舞台上定位和缩放文字跟其他精灵是一样的。
 
 如果你想改变文字对象的内容，用 `text` 属性。
 ```js
@@ -1876,7 +1875,7 @@ Pixi也能够包裹很长的一行文字。设置文字的 `wordWrap` 样式为 
 ```js
 message.style = {wordWrap: true, wordWrapWidth: 100, align: center};
 ```
-（注意：`align` 不回影响单行文字 。）
+（注意：`align` 不影响单行文字 。）
 
 如果你想使用自定义字体，用CSS的 `@font-face` 规则在Pixi应用运行的HTML页面中去链接字体文件。
 ```js
@@ -1911,7 +1910,7 @@ if (hitTestRectangle(cat, box)) {
 
 ![Displaying text](/examples/images/screenshots/25.png)
 
-你已经看到了创建这些所有节点的代码，包括键盘控制系统可以使猫移动。唯一的新的东西就是 `hitTestRectangle` 函数被用在 `play` 函数里用来检测碰撞。
+你已经看到了创建这些所有元素的代码，包括键盘控制系统可以使猫移动。唯一的新的东西就是 `hitTestRectangle` 函数被用在 `play` 函数里用来检测碰撞。
 ```js
 function play() {
 
@@ -1949,7 +1948,7 @@ box.tint = 0xff3300;
 message.text = "no collision...";
 box.tint = 0xccff99;
 ```
-代码很简单，但是你突然创造了一个看起来完全活着的互动的世界！它简直跟魔术一样！也许令人惊讶的是，你现在已经拥有了你需要用Pixi制作游戏的全部技能！
+代码很简单，但是你突然创造了一个看起来完全活着的互动的世界！它简直跟魔术一样！令人惊讶的是，你现在可能已经拥有了你需要用Pixi制作游戏的全部技能！
 
 <a id='hittest'></a>
 ### hitTestRectangle函数
@@ -2024,11 +2023,11 @@ function hitTestRectangle(r1, r2) {
 
 ![Treasure Hunter](/examples/images/screenshots/26.png)
 
-宝藏猎手是一个简单的完整的游戏之一，它是一个很好的例子，它能让你把目前所学的所有工具都用上。用键盘的方向键可以帮助探险者找到宝藏并携带它出去。六只怪物在地牢的地板上上下移动，如果它们碰到了探险者，探险者变为半透明，而且他右上角的血槽会收缩。如果所有的血都用完了，"You Lost!"会出现在舞台上；如果探险者带着宝藏到达了出口，显示 “You Won!” 。尽管它是一个基础的原型，宝藏猎手包含了很多大型游戏里很大一部分元素：纹理图集图像，互动性，碰撞以及多个游戏场景。让我们一起去看看游戏是如何被组合起来的，以便于你可以用它作你自己开发的游戏的起点。
+宝藏猎手是一个简单的完整的游戏之一，它是一个很好的例子，它能让你把目前所学的所有工具都用上。用键盘的方向键可以帮助探险者找到宝藏并携带它出去。六只怪物在地牢的地板上上下移动，如果它们碰到了探险者，探险者变为半透明，而且他右上角的血槽会收缩。如果所有的血都用完了，"You Lost!"会出现在舞台上；如果探险者带着宝藏到达了出口，显示 “You Won!” 。尽管它是一个基础的原型，宝藏猎手包含了很多大型游戏里很大一部分元素：纹理图集图像，互动性，碰撞以及多个游戏场景。让我们一起去看看游戏是如何被它们组合起来的，以便于你可以用它作你自己开发的游戏的起点。
 
 ### 代码结构
 
-打开 `treasureHunter.html` 文件，你将会看到所有的代码都在一个大的文件里。下面是一个关于如何组织所有代码的鸟瞰图：
+打开 `treasureHunter.html` 文件，你将会看到所有的代码都在一个大的文件里。下面是一个关于如何组织所有代码的概览：
 
 ```js
 //Setup Pixi and load the texture atlas files - call the `setup`
@@ -2054,7 +2053,7 @@ function end() {
 //The game's helper functions:
 //`keyboard`, `hitTestRectangle`, `contain` and `randomInt`
 ```
-用这个作为你游戏的世界地图，让我们看看每一部分是如何工作的。
+用这个作为你游戏代码的蓝图，让我们看看每一部分是如何工作的。
 
 <a id='initialize'></a>
 ### 在 setup 函数中初始化游戏
@@ -2228,7 +2227,7 @@ healthBar.outer.width = 30;
 <a id='message'></a>
 #### 制作消息文字
 
-当游戏结束的时候， “You won!” 或者 “You lost!” 的文字会显示出来。这使用文字纹理制作的，并添加到了 `gameOverScene`。因为 `gameOverScene`的 `visible` 属性设为了 `false` ，当游戏开始的时候，你看不到这些文字。这段代码来自 `setup` 函数，它创建了消息文字，而且被添加到了 `gameOverScene`。
+当游戏结束的时候， “You won!” 或者 “You lost!” 的文字会显示出来。这使用文字纹理制作的，并添加到了 `gameOverScene`。因为 `gameOverScene` 的 `visible` 属性设为了 `false` ，当游戏开始的时候，你看不到这些文字。这段代码来自 `setup` 函数，它创建了消息文字，而且被添加到了 `gameOverScene`。
 ```js
 message = new Text(
   "The End!",
@@ -2278,7 +2277,7 @@ contain(explorer, {x: 28, y: 10, width: 488, height: 480});
 ```
 `contain`  接收两个参数。第一个是你想控制的精灵。第二个是包含了 `x`, `y`, `width` 和 `height`属性的任何一个对象。在这个例子中，控制对象定义了一个区域，它稍微比舞台小了一点，和地牢的尺寸一样。
 
-这里是实现了上述功能的 `contain` 函数。函数检查了精灵是否跨越了控制对象的边界。如果超出，代码会把精灵继续放在那个边界上。 `contain` 函数页返回了一个值可能为"top", "right", "bottom" 或者 "left" 的 `collision` 变量，取决于精灵碰到了哪一个边界。（如果精灵没有碰到任何边界，`collision` 将返回 `undefined` 。）
+这里是实现了上述功能的 `contain` 函数。函数检查了精灵是否跨越了控制对象的边界。如果超出，代码会把精灵继续放在那个边界上。 `contain` 函数也返回了一个值可能为"top", "right", "bottom" 或者 "left" 的 `collision` 变量，取决于精灵碰到了哪一个边界。（如果精灵没有碰到任何边界，`collision` 将返回 `undefined` 。）
 ```js
 function contain(sprite, container) {
 
@@ -2489,11 +2488,11 @@ https://github.com/kittykatattack/hexi
 请帮助支持这个项目！
 -------------------
 
-买这本书吧！不敢相信，有人居然会付钱给我让我完成这个教程并把它写成一本书！
+买这本书吧！不敢相信，有人居然会付钱让我完成这个教程并把它写成一本书！
 
 [Learn PixiJS](http://www.springer.com/us/book/9781484210956)
 
-（它可不是一本毫无价值的『电子书』，而是一本真实的，很厚的纸质书，由世界上最大的出版商，施普林格出版！这意味着你可以邀请你的朋友过来，防火，烤棉花糖！！）它比本教程多出了80%的内容，它充满了所有如何用Pixi制作所有交互应用和游戏的必要的技术。
+（它可不是一本毫无价值的『电子书』，而是一本真实的，很厚的纸质书，由世界上最大的出版商，施普林格出版！这意味着你可以邀请你的朋友过来，放火，烤棉花糖！！）它比本教程多出了80%的内容，它包含了所有如何用Pixi制作所有交互应用和游戏的必要技术。
 
 怎么做到的:
 
